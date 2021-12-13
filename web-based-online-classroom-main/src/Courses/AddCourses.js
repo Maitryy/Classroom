@@ -1,63 +1,117 @@
 import React, { useState } from 'react'
-import CoreCoursesForm from './CoreCoursesForm';
-import ElectiveCourseForm from './ElectiveCourseForm';
 import './AddCourse.css';
 import '../Auth/Register.css'
 import image1 from '../images/add-course.png'
-import image2 from '../images/student-reg-01.png'
-import image3 from '../images/teacher-reg-01.png'
 
 
 function AddCourses() {
-    const [click,setClick] = useState(false);
-    const handleClick = () => setClick(!click);
+    const [name,getName] = useState("");
+    const [id,getID] = useState("");
+    const [description,getDescription] = useState("");
+    const [link,getLink] = useState("");
+    const [image,getImage] = useState("");
 
-    const [Click,SetClick] = useState(false);
-    const HandleClick = () => SetClick(!Click);
+
+   
+
+    const history = useHistory();
+
+    async function addCoreCourse(e){
+        e.preventDefault();
+
+        try {
+            const CoreCourse = {
+                name,
+                id,
+                description,
+                link,
+                image
+            }
+            
+            const y = await axios.post("http://localhost:5000/course/AddCourse", CoreCourse);
+            if(y)
+            {
+                history.push('/HomeTeacher');
+            }
+
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
 
     return (
-        // <div className = 'add-courses'>
-        //     <h1>Add New Course:</h1>
-        //     <button onClick={handleClick}>Core Course</button>
-        //     <div className = {click? 'create':'create-inactive'}>
-        //         <CoreCoursesForm />
-        //     </div>
-        //     <button onClick={HandleClick}>Elective Course</button>
-        //     <div className = {Click? 'create':'create-inactive'}>
-        //         <ElectiveCourseForm />
-        //     </div>
-        // </div>
-
+        
         <div className="container">
             <div className="regi ">
-            <div className="profile">
-            <img className = "prof-head" src={image1} alt=""/>
-            </div>
+                <div className="profile">
+                    <img className = "prof-head" src={image1} alt=""/>
+                </div>
             </div>
             <div className="row both-reg">
                 <div className="col col-lg-6 col-md-6 col-sm-12 col-12">
                     <div className = " regi-btns ">
-                    
-                        <button className = "student-btn btn btn-lg btn-course" onClick = {handleClick}>
-                        Core Course
-                        </button>
-                        <div className=" regs"><img className = "" src={image2} alt=""/></div>
-                        <div className = {click? 'create':'create-inactive'}>
-                        <CoreCoursesForm />
+                    <form className = "create" onSubmit = {addCoreCourse}>
+                        <div className="prop">
+                            <label >Course Name </label>
+                            <input 
+                                className = "textarea"
+                                type='string' 
+                                placeholder = 'Enter Course Name' 
+                                onChange = {(e) => getName(e.target.value)}
+                                value= {name}
+                            />
                         </div>
-                    </div>
-                </div>
-                <div className="col col-lg-6 col-md-6 col-sm-12 col-12">
-                    <div className = "  regi-btns">
-                   
-                        <button className = "teacher-btn btn btn-lg btn-course" onClick = {HandleClick}>
-                        Elective Course
-                        </button>
-                        <div className=" regs"><img className = "" src={image3} alt=""/></div>
-                        <div className = {Click? 'create':'create-inactive'}>
-                        <ElectiveCourseForm />
+
+                        <div className="prop">
+                            <label >Course ID</label>
+                            <input 
+                                className = "textarea"
+                                type='string' 
+                                placeholder = 'Enter Course ID' 
+                                onChange = {(e) => getID(e.target.value)}
+                                value= {id}
+                            />
                         </div>
+
+                        <div className="prop">
+                            <label >Course Description</label>
+                            <textarea 
+                                className = "textarea"
+                                rows="5"
+                                maxlength ="60"
+                                type='string' 
+                                placeholder = 'Write a short description of the course' 
+                                onChange = {(e) => getDescription(e.target.value)}
+                                value= {description}
+                            />
+                        </div>
+
+                        <div className="prop">
+                            <label >Class Link</label>
+                            <input 
+                                className = "textarea"
+                                type='string' 
+                                placeholder = 'google meet / webex meet link' 
+                                onChange = {(e) => getLink(e.target.value)}
+                                value= {link}
+                            />
+                        </div>
+
+                        <div className="prop">
+                            <label >Image Link</label>
+                            <input 
+                                className = "textarea"
+                                type='string' 
+                                placeholder = 'image url' 
+                                onChange = {(e) => getImage(e.target.value)}
+                                value= {image}
+                            />
+                        </div>
+
+                        <button  type = 'submit'>Add Course</button>
+
+                        </form>
                     </div>
                 </div>
             </div>
