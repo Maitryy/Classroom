@@ -45,7 +45,7 @@ useEffect(async() => {
 
 
 useEffect(async() => {
-    const response = await fetch("http://localhost:5000/course/GetAllCourses");
+    const response = await fetch("http://localhost:5000/course/GetCourses");
     const da = await response.json();
     setData(da);
 }, []);
@@ -72,8 +72,7 @@ useEffect( () => {
                                 <p className="lead">{course.description} </p>
                                 <hr className="my-4"/>
                                 <strong>
-                                    <p>Course credits : {course.credits}</p>
-                                    <p>Mentors: {course.teacher}</p>
+                                    <p>Mentor: {course.teacher}</p>
                                 </strong>
                                 <a href = {course.link} target="_blank"><button className = "btn btn-sm btn-warning"><strong>Live Session </strong></button></a>
                             </div>

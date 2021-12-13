@@ -34,6 +34,8 @@ import EditProfile from './Components/EditProfile';
 import GradesMain from './Components/GradesMain';
 import FAQPage from './Components/FAQPage';
 import NewAssignment from './Components/NewAssignment';
+import ExploreCourse from './Components/ExploreCourses';
+import { route } from '../Backend/routers/CourseRouter';
 
 function Router() {
     const {loggedIn} = useContext(AuthContext);
@@ -98,6 +100,9 @@ function Router() {
                         </Route>
                         <Route exact path = '/MyCourses'>
                             <MyCourses />
+                        </Route>
+                        <Route exact Path = '/ExploreCourses'>
+                            <ExploreCourse />
                         </Route>
                         <Route exact path = '/CoreCourses'>
                             <CoreCoursePage />
